@@ -26,6 +26,9 @@ function consulFeatureStoreInternal(options) {
     })
   );
   var client = consul(Object.assign({}, options.consulOptions, { promisify: true }));
+  // Note, "promisify: true" causes the client to decorate all of its methods so they return Promises
+  // instead of taking callbacks. That's the reason why we can't let the caller pass an already-created
+  // client to us - because our code wouldn't work if it wasn't in Promise mode.
   var prefix = (options.prefix || defaultPrefix) + '/';
 
   var store = {};
@@ -42,6 +45,8 @@ function consulFeatureStoreInternal(options) {
     return prefix + '$inited';
   }
 
+  // The issue here is that this Consul client is very literal-minded about what is an error, so if Consul
+  // returns a 404, it treats that as a failed operation rather than just "the query didn't return anything."
   function suppressNotFoundErrors(promise) {
     return promise.catch(function(err) {
       if (err.message == notFoundError) {
@@ -59,14 +64,6 @@ function consulFeatureStoreInternal(options) {
       logError(err, message);
       cb(failValue);
     };
-  }
-
-  function makePromise(fn) {
-    return new Promise(function(resolve, reject) {
-      fn(function(err, result) {
-        err ? reject(err) : resolve(result);
-      });
-    });
   }
 
   store.getInternal = function(kind, key, cb) {
@@ -106,19 +103,19 @@ function consulFeatureStoreInternal(options) {
           collection.items.forEach(function(item) {
             var key = itemKey(kind, item.key);
             oldKeys.delete(key);
-            var op  = makePromise(function(cb) { client.kv.set({ key: key, value: JSON.stringify(item) }, cb); });
+            var op  = client.kv.set({ key: key, value: JSON.stringify(item) });
             promises.push(op);
           });
         });
 
         // Remove existing data that is not in the new list.
         oldKeys.forEach(function(key) {
-          var op = makePromise(function(cb) { client.kv.del({ key: key }, cb); });
+          var op = client.kv.del({ key: key });
           promises.push(op);
         });
 
         // Always write the initialized token when we initialize.
-        var op = makePromise(function(cb) { client.kv.set({ key: initedKey(), value: '' }, cb); });
+        var op = client.kv.set({ key: initedKey(), value: '' });
         promises.push(op);
       
         return Promise.all(promises);
