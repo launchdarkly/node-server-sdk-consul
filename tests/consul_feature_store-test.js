@@ -20,6 +20,10 @@ describe('ConsulFeatureStore', function() {
     return new ConsulFeatureStore({ cacheTTL: 0 });
   }
 
+  function makeStoreWithPrefix(prefix) {
+    return new ConsulFeatureStore({ prefix: prefix, cacheTTL: 0 });
+  }
+
   function makeStoreWithHook(hook) {
     var store = makeStore();
     store.underlyingStore.testUpdateHook = hook;
@@ -31,7 +35,7 @@ describe('ConsulFeatureStore', function() {
   });
 
   describe('uncached', function() {
-    testBase.baseFeatureStoreTests(makeStoreWithoutCache, clearTable, false);
+    testBase.baseFeatureStoreTests(makeStoreWithoutCache, clearTable, false, makeStoreWithPrefix);
   });
 
   testBase.concurrentModificationTests(makeStore, makeStoreWithHook);
