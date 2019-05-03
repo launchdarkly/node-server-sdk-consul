@@ -1,6 +1,6 @@
 LaunchDarkly SDK for Node.js - Consul integration
 =================================================
-[![CircleCI](https://circleci.com/gh/launchdarkly/node-consul-store.svg?style=svg)](https://circleci.com/gh/launchdarkly/node-consul-store)
+[![CircleCI](https://circleci.com/gh/launchdarkly/node-server-sdk-consul.svg?style=svg)](https://circleci.com/gh/launchdarkly/node-server-sdk-consul)
 
 This library provides a Consul-backed persistence mechanism (feature store) for the [LaunchDarkly Node.js SDK](https://github.com/launchdarkly/node-client), replacing the default in-memory feature store. It uses the [consul](https://www.npmjs.com/package/consul) package.
 
