@@ -1,4 +1,4 @@
-// Type definitions for ldclient-node-consul-store
+// Type definitions for launchdarkly-node-server-sdk-consul
 
 /**
  * Interface for the Consul feature store component to be used with the LaunchDarkly SDK.
@@ -6,8 +6,8 @@
  * See: https://docs.launchdarkly.com/v2.0/docs/using-a-persistent-feature-store
  */
 
-declare module 'ldclient-node-consul-store' {
-  import { LDFeatureStore, LDLogger } from 'ldclient-node';
+declare module 'launchdarkly-node-server-sdk-consul' {
+  import { LDFeatureStore, LDLogger } from 'launchdarkly-node-server-sdk';
   // note that the node-consul package does not have TypeScript definitions
 
   /**
