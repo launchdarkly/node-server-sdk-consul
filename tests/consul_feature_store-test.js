@@ -1,5 +1,5 @@
 var ConsulFeatureStore = require('../consul_feature_store');
-var testBase = require('ldclient-node/test/feature_store_test_base');
+var testBase = require('launchdarkly-node-server-sdk/test/feature_store_test_base');
 var consul = require('consul');
 
 describe('ConsulFeatureStore', function() {

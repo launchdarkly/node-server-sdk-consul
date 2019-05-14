@@ -1,7 +1,7 @@
 var consul = require('consul');
 var winston = require('winston');
 
-var CachingStoreWrapper = require('ldclient-node/caching_store_wrapper');
+var CachingStoreWrapper = require('launchdarkly-node-server-sdk/caching_store_wrapper');
 
 var defaultCacheTTLSeconds = 15;
 var defaultPrefix = 'launchdarkly';
