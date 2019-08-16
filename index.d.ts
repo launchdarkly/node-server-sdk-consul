@@ -13,7 +13,7 @@ declare module 'launchdarkly-node-server-sdk-consul' {
   /**
    * Create a feature flag store backed by Consul.
    */
-  export function ConsulFeatureStore(
+  export default function ConsulFeatureStore(
     /**
      * Options for configuring the feature store.
      */
