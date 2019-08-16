@@ -1,6 +1,6 @@
 {
   "name": "launchdarkly-node-server-sdk-consul",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Consul-backed feature store for the LaunchDarkly Node.js SDK",
   "main": "consul_feature_store.js",
   "license": "Apache-2.0",
