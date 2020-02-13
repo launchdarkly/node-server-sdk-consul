@@ -12,7 +12,7 @@ function ConsulFeatureStore(options) {
   if (ttl === null || ttl === undefined) {
     ttl = defaultCacheTTLSeconds;
   }
-  return new CachingStoreWrapper(consulFeatureStoreInternal(options), ttl);
+  return new CachingStoreWrapper(consulFeatureStoreInternal(options), ttl, 'Consul');
 }
 
 function consulFeatureStoreInternal(options) {
