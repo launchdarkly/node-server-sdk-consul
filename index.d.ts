@@ -7,7 +7,7 @@
  */
 
 declare module 'launchdarkly-node-server-sdk-consul' {
-  import { LDFeatureStore, LDLogger } from 'launchdarkly-node-server-sdk';
+  import { LDFeatureStore, LDLogger, LDOptions } from 'launchdarkly-node-server-sdk';
   // note that the node-consul package does not have TypeScript definitions
 
   /**
