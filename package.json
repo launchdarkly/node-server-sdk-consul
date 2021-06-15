@@ -33,8 +33,7 @@
   },
   "dependencies": {
     "consul": "0.34.1",
-    "node-cache": "4.2.0",
-    "winston": "2.4.1"
+    "node-cache": "4.2.0"
   },
   "peerDependencies": {
     "launchdarkly-node-server-sdk": "^6.0.0-alpha.1"

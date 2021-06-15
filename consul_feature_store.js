@@ -1,5 +1,4 @@
 var consul = require('consul');
-var winston = require('winston');
 
 var CachingStoreWrapper = require('launchdarkly-node-server-sdk/caching_store_wrapper');
 
@@ -12,19 +11,18 @@ function ConsulFeatureStore(options) {
   if (ttl === null || ttl === undefined) {
     ttl = defaultCacheTTLSeconds;
   }
-  return new CachingStoreWrapper(consulFeatureStoreInternal(options), ttl, 'Consul');
+
+  return config =>
+    new CachingStoreWrapper(
+      consulFeatureStoreInternal(options, config.logger),
+      ttl,
+      'Consul'
+    );
 }
 
-function consulFeatureStoreInternal(options) {
+function consulFeatureStoreInternal(options, sdkLogger) {
   options = options || {};
-  var logger = (options.logger ||
-    new winston.Logger({
-      level: 'info',
-      transports: [
-        new (winston.transports.Console)(),
-      ]
-    })
-  );
+  var logger = options.logger || sdkLogger;
   var client = consul(Object.assign({}, options.consulOptions, { promisify: true }));
   // Note, "promisify: true" causes the client to decorate all of its methods so they return Promises
   // instead of taking callbacks. That's the reason why we can't let the caller pass an already-created
