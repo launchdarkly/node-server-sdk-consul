@@ -12,13 +12,17 @@ declare module 'launchdarkly-node-server-sdk-consul' {
 
   /**
    * Create a feature flag store backed by Consul.
+   * 
+   * @returns
+   *   A factory function that the SDK will use to create the data store. Put this value into the
+   *   `featureStore` property of [[LDOptions]].
    */
   export default function ConsulFeatureStore(
     /**
      * Options for configuring the feature store.
      */
     options?: LDConsulOptions
-  ): LDFeatureStore;
+  ): (config: LDOptions) => LDFeatureStore;
 
   /**
    * Options for configuring a ConsulFeatureStore.
