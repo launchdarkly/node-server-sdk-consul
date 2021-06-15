@@ -2,6 +2,15 @@ var ConsulFeatureStore = require('../consul_feature_store');
 var testBase = require('launchdarkly-node-server-sdk/test/feature_store_test_base');
 var consul = require('consul');
 
+function stubLogger() {
+  return {
+    debug: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn()
+  };
+}
+
 describe('ConsulFeatureStore', function() {
 
   var client = consul();
@@ -12,16 +21,18 @@ describe('ConsulFeatureStore', function() {
     });
   }
 
+  const sdkConfig = { logger: stubLogger() };
+
   function makeStore() {
-    return new ConsulFeatureStore();
+    return ConsulFeatureStore()(sdkConfig);
   }
 
   function makeStoreWithoutCache() {
-    return new ConsulFeatureStore({ cacheTTL: 0 });
+    return ConsulFeatureStore({ cacheTTL: 0 })(sdkConfig);
   }
 
   function makeStoreWithPrefix(prefix) {
-    return new ConsulFeatureStore({ prefix: prefix, cacheTTL: 0 });
+    return ConsulFeatureStore({ prefix: prefix, cacheTTL: 0 })(sdkConfig);
   }
 
   function makeStoreWithHook(hook) {
