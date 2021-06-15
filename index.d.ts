@@ -3,7 +3,7 @@
 /**
  * Interface for the Consul feature store component to be used with the LaunchDarkly SDK.
  *
- * See: https://docs.launchdarkly.com/v2.0/docs/using-a-persistent-feature-store
+ * See: https://docs.launchdarkly.com/sdk/features/database-integrations
  */
 
 declare module 'launchdarkly-node-server-sdk-consul' {
