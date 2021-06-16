@@ -2,6 +2,11 @@ publications:
   - url: https://www.npmjs.com/package/launchdarkly-node-server-sdk-consul
     description: npm
 
+releasableBranches:
+  - name: master
+    description: 2.x
+  - name: 1.x
+
 template:
   name: npm
   skip:
