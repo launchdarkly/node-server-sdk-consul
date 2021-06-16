@@ -4,7 +4,7 @@ All notable changes to the LaunchDarkly Node.js SDK Consul integration will be d
 
 ## [2.0.0-rc.1] - 2021-06-15
 
-_This is a release candidate version corresponding to the current projected state of the 3.0.0 release. The final 2.0.0 release may include additional functionality or fixes._
+_This is a release candidate version corresponding to the current projected state of the 2.0.0 release. The final 2.0.0 release may include additional functionality or fixes._
 
 The 2.0.0 release of `launchdarkly-node-server-sdk-consul` is for use with version 6.x of the LaunchDarkly server-side SDK for Node.js. It has the same functionality as the previous major version, but its dependencies, Node version compatibility, and internal API have been updated to match the 6.0.0 release of the SDK.
 
