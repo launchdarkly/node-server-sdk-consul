@@ -2,6 +2,15 @@
 
 All notable changes to the LaunchDarkly Node.js SDK Consul integration will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org).
 
+## [2.0.0] - 2021-06-17
+The 2.0.0 release of `launchdarkly-node-server-sdk-consul` is for use with version 6.x of the LaunchDarkly server-side SDK for Node.js. It has the same functionality as the previous major version, but its dependencies, Node version compatibility, and internal API have been updated to match the 6.0.0 release of the SDK.
+
+This version uses the same Consul client package as previous releases.
+
+### Changed:
+- The minimum Node.js version is now 12.
+- The package no longer has a dependency on `winston`. It still allows you to configure a custom logger, but if you do not, it will use whatever logging configuration the SDK is using.
+
 ## [1.0.5] - 2020-03-25
 ### Removed:
 - The package dependencies mistakenly included `typedoc`.
