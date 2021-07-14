@@ -39,7 +39,7 @@ export class ConsulFeatureStoreImpl { // exported for tests
 
   // The consul package does not have TypeScript definitions - hence the unfortunate use of "any" for
   // the client and its parameters.
-  private client: any;
+  private client: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   private prefix: string;
 
   constructor(options: LDConsulOptions, public logger: LDLogger) {
@@ -55,7 +55,9 @@ export class ConsulFeatureStoreImpl { // exported for tests
   public getInternal(kind: DataKind, key: string, callback: (item?: VersionedData) => void): void {
     (async () => {
       try {
+        /* eslint-disable @typescript-eslint/no-explicit-any */
         const result: any = await this.suppressNotFoundErrors(this.client.kv.get({ key: this.itemKey(kind, key) }));
+        /* eslint-enable @typescript-eslint/no-explicit-any */
         callback(result ? JSON.parse(result.Value) : null);
       } catch (err) {
         this.logError(err, `query of ${kind.namespace} ${key}`);
@@ -67,7 +69,9 @@ export class ConsulFeatureStoreImpl { // exported for tests
   public getAllInternal(kind: DataKind, callback: (items: KeyedItems) => void): void {
     (async () => {
       try {
+        /* eslint-disable @typescript-eslint/no-explicit-any */
         const result: any = await this.suppressNotFoundErrors(this.client.kv.get({ key: this.kindKey(kind), recurse: true }));
+        /* eslint-enable @typescript-eslint/no-explicit-any */
         const itemsOut: KeyedItems = {};
         if (result) {
           for (const value of result) {
@@ -135,7 +139,9 @@ export class ConsulFeatureStoreImpl { // exported for tests
       let result = newItem;
       try {
         while (!done) {
+          /* eslint-disable @typescript-eslint/no-explicit-any */
           const oldValue: any = await this.suppressNotFoundErrors(this.client.kv.get({ key: key }));
+          /* eslint-enable @typescript-eslint/no-explicit-any */
 
           // instrumentation for unit tests
           if (this.testUpdateHook) {

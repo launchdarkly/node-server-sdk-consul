@@ -3,13 +3,14 @@ import { LDLogger } from 'launchdarkly-node-server-sdk';
 /**
  * Options for configuring a [[ConsulFeatureStore]].
  */
-  export interface LDConsulOptions {
+export interface LDConsulOptions {
   /**
    * Options to be passed to the Consul client constructor, as defined by the node-consul package.
    * Commonly used options include "host" (hostname), "port", and "secure" (true to use HTTPS).
    * For other options, see `node-consul` documentation here: https://github.com/silas/node-consul
    */
-  consulOptions?: object;
+  consulOptions?: { [key: string]: any }; // eslint-disable-line @typescript-eslint/no-explicit-any
+  // Note, the node-consul library provides no TypeScript types, hence the type is vague here
 
   /**
    * An optional namespace prefix for all keys stored in Consul. Use this if you are sharing
