@@ -2,45 +2,37 @@
   "name": "launchdarkly-node-server-sdk-consul",
   "version": "2.0.0",
   "description": "Consul-backed feature store for the LaunchDarkly Node.js SDK",
-  "main": "consul_feature_store.js",
   "license": "Apache-2.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
   "scripts": {
-    "test": "jest --ci --forceExit",
-    "check-typescript": "node_modules/typescript/bin/tsc",
-    "lint": "eslint --format 'node_modules/eslint-formatter-pretty' --ignore-path .eslintignore ."
+    "prepublish": "npm run build",
+    "build": "tsc",
+    "test": "jest --ci",
+    "lint": "eslint --cache --ext .ts src test"
   },
-  "types": "./index.d.ts",
   "devDependencies": {
-    "@babel/core": "^7.14.6",
-    "@babel/preset-env": "^7.14.5",
-    "@types/node": "^15.12.2",
-    "babel-jest": "^27.0.2",
-    "eslint": "^7.28.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-formatter-pretty": "^4.1.0",
-    "eslint-plugin-prettier": "^3.4.0",
+    "@types/jest": "^26.0.24",
+    "@types/node": "^16.3.1",
+    "@typescript-eslint/eslint-plugin": "^4.28.3",
+    "@typescript-eslint/parser": "^4.28.3",
+    "eslint": "^7.30.0",
     "jest": "^27.0.4",
     "jest-junit": "^12.2.0",
     "launchdarkly-js-test-helpers": "^1.2.1",
-    "launchdarkly-node-server-sdk": "^6.0.0",
-    "prettier": "^2.3.1",
+    "launchdarkly-node-server-sdk": "6.2.0-alpha.bigsegments.3",
+    "ts-jest": "^27.0.0",
     "typescript": "^4.3.2"
   },
-  "jest": {
-    "rootDir": ".",
-    "testEnvironment": "node",
-    "testMatch": [
-      "**/*-test.js"
-    ],
-    "testResultsProcessor": "jest-junit",
-    "transformIgnorePatterns": []
-  },
   "dependencies": {
-    "consul": "0.34.1",
+    "consul": "0.40.0",
     "node-cache": "4.2.0"
   },
   "peerDependencies": {
-    "launchdarkly-node-server-sdk": "^6.0.0"
+    "launchdarkly-node-server-sdk": "6.2.0-alpha.bigsegments.3"
   },
   "engines": {
     "node": ">= 12.0"
