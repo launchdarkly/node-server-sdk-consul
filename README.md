@@ -20,28 +20,28 @@ This assumes that you have already installed the LaunchDarkly Node.js SDK.
 
 2. Require the package:
 
-        var ConsulFeatureStore = require('launchdarkly-node-server-sdk-consul');
+        const { ConsulFeatureStore } = require('launchdarkly-node-server-sdk-consul');
 
 3. When configuring your SDK client, add the Consul feature store:
 
-        var store = ConsulFeatureStore({ consulOptions: { host: 'your-consul-host' } });
-        var config = { featureStore: store };
-        var client = LaunchDarkly.init('YOUR SDK KEY', config);
+        const store = ConsulFeatureStore({ consulOptions: { host: 'your-consul-host' } });
+        const config = { featureStore: store };
+        const client = LaunchDarkly.init('YOUR SDK KEY', config);
 
 4. If you are running a [LaunchDarkly Relay Proxy](https://github.com/launchdarkly/ld-relay) instance, or any other process that will prepopulate Consul with feature flags from LaunchDarkly, you can use [daemon mode](https://github.com/launchdarkly/ld-relay#daemon-mode), so that the SDK retrieves flag data only from Consul and does not communicate directly with LaunchDarkly. This is controlled by the SDK's `useLdd` option:
 
-        var config = { featureStore: store, useLdd: true };
-        var client = LaunchDarkly.init('YOUR SDK KEY', config);
+        const config = { featureStore: store, useLdd: true };
+        const client = LaunchDarkly.init('YOUR SDK KEY', config);
 
 5. If the same Consul host is being shared by SDK clients for different LaunchDarkly environments, set the `prefix` option to a different short string for each one to keep the keys from colliding:
 
-        var store = ConsulFeatureStore({ consulOptions: { host: 'your-consul-host' }, prefix: 'env1' });
+        const store = ConsulFeatureStore({ consulOptions: { host: 'your-consul-host' }, prefix: 'env1' });
 
 ## Caching behavior
 
 To reduce traffic to Consul, there is an optional in-memory cache that retains the last known data for a configurable amount of time. This is on by default; to turn it off (and guarantee that the latest feature flag data will always be retrieved from Consul for every flag evaluation), configure the store as follows:
 
-        var store = ConsulFeatureStore('YOUR TABLE NAME', { cacheTTL: 0 });
+        const store = ConsulFeatureStore('YOUR TABLE NAME', { cacheTTL: 0 });
 
 ## About LaunchDarkly
 
