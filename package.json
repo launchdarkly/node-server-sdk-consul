@@ -32,7 +32,7 @@
     "node-cache": "4.2.0"
   },
   "peerDependencies": {
-    "launchdarkly-node-server-sdk": "6.2.0-alpha.bigsegments.3"
+    "launchdarkly-node-server-sdk": "^6.0.0"
   },
   "engines": {
     "node": ">= 12.0"
