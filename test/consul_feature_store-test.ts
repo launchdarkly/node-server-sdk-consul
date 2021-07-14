@@ -1,5 +1,5 @@
 import { ConsulFeatureStoreImpl, defaultPrefix } from '../src/feature_store';
-import { ConsulFeatureStore } from '../src/index';
+import ConsulFeatureStore from '../src/index';
 
 import * as Consul from 'consul';
 import * as ld from 'launchdarkly-node-server-sdk';

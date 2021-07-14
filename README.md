@@ -20,7 +20,7 @@ This assumes that you have already installed the LaunchDarkly Node.js SDK.
 
 2. Require the package:
 
-        const { ConsulFeatureStore } = require('launchdarkly-node-server-sdk-consul');
+        const ConsulFeatureStore = require('launchdarkly-node-server-sdk-consul');
 
 3. When configuring your SDK client, add the Consul feature store:
 
