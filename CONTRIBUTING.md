@@ -37,9 +37,3 @@ The tests expect you to have Consul running locally. A simple way to do this is 
 ```bash
 docker run -p 8500:8500 consul
 ```
-
-To verify that the TypeScript declarations compile correctly (this involves compiling the file `test-types.ts`, so if you have changed any types or interfaces, you will want to update that code):
-
-```
-npm run check-typescript
-```
