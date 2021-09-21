@@ -1,7 +1,6 @@
 const ConsulFeatureStore = require('../consul_feature_store');
 const {
   runPersistentFeatureStoreTests,
-  runBigSegmentStoreTests,
 } = require('launchdarkly-node-server-sdk/sharedtest/store_tests');
 const consul = require('consul');
 
@@ -12,7 +11,7 @@ function actualPrefix(prefix) {
 }
 
 function clearAllData(client) {
-  return async prefix => {
+  return async (prefix) => {
     await client.kv.del({ key: actualPrefix(prefix), recurse: true });
   };
 }
