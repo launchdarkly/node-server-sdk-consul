@@ -1,53 +1,38 @@
-var ConsulFeatureStore = require('../consul_feature_store');
-var testBase = require('launchdarkly-node-server-sdk/test/feature_store_test_base');
-var consul = require('consul');
+const ConsulFeatureStore = require('../consul_feature_store');
+const {
+  runPersistentFeatureStoreTests,
+} = require('launchdarkly-node-server-sdk/sharedtest/store_tests');
+const consul = require('consul');
 
-function stubLogger() {
-  return {
-    debug: jest.fn(),
-    info: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn()
+// Runs the standard test suites provided by the SDK's store_tests module.
+
+function actualPrefix(prefix) {
+  return prefix || 'launchdarkly';
+}
+
+function clearAllData(client) {
+  return async (prefix) => {
+    await client.kv.del({ key: actualPrefix(prefix), recurse: true });
   };
 }
 
 describe('ConsulFeatureStore', function() {
 
-  var client = consul();
+  const client = consul({ promisify: true });
 
-  function clearTable(done) {
-    client.kv.del({ key: 'launchdarkly', recurse: true }, function() {
-      done();
-    });
+  function createStore(prefix, cacheTTL, logger) {
+    return ConsulFeatureStore({ prefix, cacheTTL })({ logger });
   }
 
-  const sdkConfig = { logger: stubLogger() };
-
-  function makeStore() {
-    return ConsulFeatureStore()(sdkConfig);
-  }
-
-  function makeStoreWithoutCache() {
-    return ConsulFeatureStore({ cacheTTL: 0 })(sdkConfig);
-  }
-
-  function makeStoreWithPrefix(prefix) {
-    return ConsulFeatureStore({ prefix: prefix, cacheTTL: 0 })(sdkConfig);
-  }
-
-  function makeStoreWithHook(hook) {
-    var store = makeStore();
+  function createStoreWithConcurrentUpdateHook(prefix, logger, hook) {
+    const store = createStore(prefix, 0, logger);
     store.underlyingStore.testUpdateHook = hook;
     return store;
   }
 
-  describe('cached', function() {
-    testBase.baseFeatureStoreTests(makeStore, clearTable, true);
-  });
-
-  describe('uncached', function() {
-    testBase.baseFeatureStoreTests(makeStoreWithoutCache, clearTable, false, makeStoreWithPrefix);
-  });
-
-  testBase.concurrentModificationTests(makeStore, makeStoreWithHook);
+  runPersistentFeatureStoreTests(
+    createStore,
+    clearAllData(client),
+    createStoreWithConcurrentUpdateHook,
+  );
 });
